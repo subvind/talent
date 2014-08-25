@@ -1,0 +1,64 @@
+<div class="resume">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row basics">
+                    <div class="col-md-6">
+                        <h1 class="name">{{res.basics.name}}</h1>
+                        <ul class="stars">
+                            <li ng-repeat-start="star in res.basics.stars" ng-show="!$first"><i class="fa fa-star"></i></li>
+                            <li ng-repeat-end>{{star}}</li>
+                        </ul>
+                    </div>
+                    <ul class="contacts col-md-6">
+                        <li><i class="fa fa-phone"></i> {{res.basics.phone}}</li>
+                        <li><i class="fa fa-envelope-o"></i> {{res.basics.email}}</li>
+                        <li><i class="fa fa-github"></i> {{res.basics.github}}</li>
+                    </ul>
+                </div>
+                <div class="skills">
+                    <h2>Technical Skills</h2>
+                    <ul class="list">
+                        <li ng-repeat="skill in res.skills">
+                            <b>{{skill.name}}</b>: {{skill.keywords.join(', ')}}
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="experience">
+                    <h2>Experience</h2>
+                    <ul>
+                        <li ng-repeat="exp in res.experience">
+                            <div class="time">
+                                <div ng-show="exp.duration">{{exp.duration}}</div>
+                                <div ng-show="!exp.duration">{{exp.startDate}} -<br> {{exp.endDate}}</div>
+                            </div>
+                            <div class="info">
+                                <b>{{exp.title}}</b>, <i>{{exp.company}}</i>
+                                <ul class="list">
+                                    <li ng-repeat="highlight in exp.highlights">
+                                        {{highlight}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="community">
+                    <h2>Community</h2>
+                    <ul>
+                        <li ng-repeat="item in res.extra">
+                            <b>{{item.title}}</b>: {{item.description}}
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="website">
+                    <!-- print pdf looks ugly with an "a href" tag-->
+                    <span ng-click="res.goGithub()">travisburandt.github.io</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

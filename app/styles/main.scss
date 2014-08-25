@@ -1,0 +1,22 @@
+
+$fa-font-path: '../bower_components/font-awesome/fonts/';
+$OpenSansPath: '../bower_components/open-sans-fontface/fonts';
+
+// bower:scss
+@import "../bower_components/open-sans-fontface/open-sans.scss";
+@import "../bower_components/font-awesome/scss/font-awesome.scss";
+@import "../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
+// endbower
+
+@import "print";
+@import "../states/resume/resume";
+
+body {
+  font-family: 'Open Sans';
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+@page {
+  margin: 0;
+}
