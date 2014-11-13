@@ -78,7 +78,7 @@ gulp.task('html', ['scripts', 'styles', 'templates'], function () {
         .pipe($.useref.restore())
         .pipe($.useref())
         .pipe($.revReplace())
-        .pipe(gulp.dest('build'))
+        .pipe(gulp.dest(buildPath))
         .pipe($.size());
 });
 
@@ -92,7 +92,7 @@ gulp.task('images', function () {
 //            progressive: true,
 //            interlaced: true
 //        })))
-        .pipe(gulp.dest('build'))
+        .pipe(gulp.dest(buildPath))
         .pipe($.size());
 });
 
@@ -103,12 +103,12 @@ gulp.task('fonts', function () {
 //            'font-awesome/**/*.{eot,svg,ttf,woff}'
         ]))
         .pipe($.flatten())
-        .pipe(gulp.dest('build/styles/fonts'))
+        .pipe(gulp.dest(buildPath + '/styles/fonts'))
         .pipe($.size());
 
     var other = $.bowerFiles()
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
-        .pipe(gulp.dest('build/bower_components'))
+        .pipe(gulp.dest(buildPath + '/bower_components'))
         .pipe($.size());
 
     return eventStream.concat(bootstrap, other);
@@ -118,8 +118,8 @@ gulp.task('clean', ['reset'], function () {
     return gulp
         .src([
             'app/.tmp',
-            './build/*',
-            '!./build/.git*'
+            './' + buildPath + '/*',
+            '!./' + buildPath + '/.git*'
         ], { read: false })
         .pipe($.clean());
 });
