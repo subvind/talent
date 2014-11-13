@@ -1,7 +1,19 @@
 $lineWidth: 100px;
 
+@media print {
+  .resume {
+    margin-bottom: 0;
+    .website {
+      // background of span isn't covering :before up on print / looks ugly
+      &:before {
+        display: none;
+      }
+    }
+  }
+}
+
 .resume {
-  margin-top: 100px;
+  margin: 100px 0;
   font-size: 16px;
   h2 {
     margin-left: $lineWidth + 20px;
@@ -42,6 +54,7 @@ $lineWidth: 100px;
       >li {
         float: left;
         margin: 0 15px 0 0;
+        cursor: pointer;
       }
     }
   }
@@ -80,12 +93,6 @@ $lineWidth: 100px;
       background: #fff;
       padding: 0 20px;
     }
-    // background of span isn't covering :before up on print / looks ugly
-    @media print {
-      &:before {
-        display: none;
-      }
-    }
     &:before {
       width: 100%;
       height: 1px;
@@ -100,6 +107,13 @@ $lineWidth: 100px;
     >li {
       padding-left: 10px;
 
+    }
+  }
+  .community {
+    >ul {
+      list-style-type: none;
+      padding: 0;
+      margin-left: $lineWidth + 20px;
     }
   }
 }

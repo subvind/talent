@@ -6,8 +6,10 @@
                     <div class="col-md-6">
                         <h1 class="name">{{res.basics.name}}</h1>
                         <ul class="stars">
-                            <li ng-repeat-start="star in res.basics.stars" ng-show="!$first"><i class="fa fa-star"></i></li>
-                            <li ng-repeat-end>{{star}}</li>
+                            <li ng-repeat-start="star in res.basics.stars" ng-mouseup="res.filter = res.addOrRemove(res.filter, star)">
+                                {{star}}
+                            </li>
+                            <li ng-repeat-end ng-show="!$last"><i class="fa fa-star"></i></li>
                         </ul>
                     </div>
                     <ul class="contacts col-md-6">
@@ -20,13 +22,31 @@
                     <h2>Technical Skills</h2>
                     <ul class="list">
                         <li ng-repeat="skill in res.skills">
-                            <b>{{skill.name}}</b>: {{skill.keywords.join(', ')}}
+                            <b>{{skill.name}}</b>:
+                            <span ng-repeat="keyword in skill.keywords" ng-mouseup="res.filter = res.addOrRemove(res.filter, keyword)">
+                                {{keyword}}<span ng-if="!$last">, </span>
+                            </span>
                         </li>
                     </ul>
                 </div>
-
                 <div class="experience">
-                    <h2>Experience</h2>
+                    <h2>
+                        <ng-pluralize
+                                count="res.filter.length"
+                                offset=3
+                                when="{
+                                        '0': 'Experience',
+                                        '1': '{{res.filter[0]}} Experience',
+                                        '2': 'Experience With {{res.filter[0]}} and {{res.filter[1]}}',
+                                        '3': 'Experience With {{res.filter[0]}}, {{res.filter[1]}}, and {{res.filter[2]}}',
+                                        'one': 'Experience With {{res.filter[0]}}, {{res.filter[1]}}, {{res.filter[2]}}, and {} Other Skill',
+                                        'other': 'Experience With {{res.filter[0]}}, {{res.filter[1]}}, {{res.filter[2]}}, and {} Other Skills'
+                                }">
+                        </ng-pluralize>
+                        <span ng-show="res.filter.length">
+                            - <a href ng-mouseup="res.filter = []">View All</a>
+                        </span>
+                    </h2>
                     <ul>
                         <li ng-repeat="exp in res.experience">
                             <div class="time">
@@ -44,7 +64,6 @@
                         </li>
                     </ul>
                 </div>
-
                 <div class="community">
                     <h2>Community</h2>
                     <ul>
@@ -53,7 +72,6 @@
                         </li>
                     </ul>
                 </div>
-
                 <div class="website">
                     <!-- print pdf looks ugly with an "a href" tag-->
                     <span ng-click="res.goGithub()">travisburandt.github.io</span>

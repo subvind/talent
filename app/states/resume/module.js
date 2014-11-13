@@ -4,7 +4,7 @@ angular
     .config(function ($stateProvider) {
         $stateProvider
             .state('resume', {
-                url: '/',
+                url: '/?filter',
                 views: {
                     'main': {
                         controller: 'ResumeCtrl as res',
@@ -14,6 +14,7 @@ angular
             });
     })
     .value("resume", {
+        "filter": [],
         "basics": {
             "name": "Travis Burandt",
             "label": "Programmer",
@@ -74,10 +75,10 @@ angular
             {
                 "name": "Stores",
                 "keywords": [
-                    "Relational",
                     "Local Storage",
-                    "key-value",
-                    "Graph"
+                    "PostgreSQL",
+                    "MySQL / MariaDB",
+                    "Redis"
                 ]
             }
         ],
@@ -90,7 +91,7 @@ angular
                 "startDate": "Jul. 2014",
                 "endDate": "Aug. 2014",
                 "highlights": [
-                    "passfb."
+                    "http://www.passfb.com"
                 ],
                 "keywords": [
                     "jQuery",
@@ -104,7 +105,9 @@ angular
                 "website": "http://passfb.com",
                 "duration": "2 Weeks",
                 "highlights": [
-                    "docbook."
+                    "Overhauled existing problematic registration system collaborating with stakeholders and our in house designers throughout design comps and development.",
+                    "Seven step registration process including physician directory search, contact info confirmation, knowledge based authentication (BKA), signature agreement, password creation, and login.",
+                    "https://registration.docbookmd.com"
                 ],
                 "keywords": [
                     "jQuery",
@@ -119,7 +122,8 @@ angular
                 "startDate": "Apr. 2014",
                 "endDate": "Jul. 2014",
                 "highlights": [
-                    "docbook."
+                    "DocbookMD's flagship product for the web.",
+                    "https://webapp.docbookmd.com"
                 ],
                 "keywords": [
                     "jQuery",
@@ -136,7 +140,7 @@ angular
                 "highlights": [
                     "One way bulk message composition and dispatching to a network of web and mobile devices via sockets, tasks, and push notifications. Implementing audit logs, progress indicators, and message tracking tools to ensure critical messages were sent in a timely and efficient manner.",
                     "Inherited from a former employee completed and maintained project.",
-                    "Maintenance and updates"
+                    "https://oneway.docbookmd.com"
                 ],
                 "keywords": [
                     "jQuery",
@@ -149,9 +153,9 @@ angular
                 "position": "Full Stack Developer",
                 "website": "http://passfb.com",
                 "startDate": "Nov. 2013",
-                "endDate": "Jan. 2014",
+                "endDate": "Current",
                 "highlights": [
-                    "ogithub...."
+                    "https://github.com/discusstron/discusstron"
                 ],
                 "keywords": [
                     "jQuery",
@@ -169,7 +173,8 @@ angular
                     "Full stack developer from the backend to UI/UX including future state and business decisions.",
                     "Using the Stripe payments API developed a complete payment system with shopping cart, invoices, fees, discounts, bank transfers, and an admin control panel to manage it all.",
                     "Full AJAX such as modal drop downs, partials, form validation, and X-editable.",
-                    "Also implementing user profiles, settings, groups, activities, and dashboard."
+                    "Also implementing user profiles, settings, groups, activities, and dashboard.",
+                    "https://app.gritness.com"
                 ],
                 "keywords": [
                     "jQuery",
@@ -244,7 +249,7 @@ angular
         "extra": [
             {
                 "title": "Cycling",
-                "description": "Podium at major domestic and international events. Member of the USA National Team 17-18 and under 23 age groups."
+                "description": "Podium at major domestic and international events. Member of the USA National Team 17-18 and under 23 age groups. Current team member of Jack & Adam's Racing Team and community volunteer."
             },
             {
                 "title": "Nerd",
