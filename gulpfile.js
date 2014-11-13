@@ -146,7 +146,7 @@ gulp.task('push', ['build'], function () {
             return run('git commit -m "'+ res +'"', buildPath);
         })
         .then(function (res) {
-            return run('git push origin HEAD:master', buildPath);
+            return run('git push origin HEAD:gh-pages', buildPath);
         })
         .then(function (res) {
             return run('git submodule update --recursive --remote --force', appPath);
