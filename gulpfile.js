@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var buildPath = path.resolve(__dirname + "/build");
+var buildPath = path.resolve(__dirname + "/TravisBurandt.github.io");
 var appPath = path.resolve(__dirname + "/../");
 var run = require("./lib/run-child-process");
 var eventStream = require('event-stream');
