@@ -144,7 +144,7 @@ gulp.task('clean', ['reset'], function () {
         .pipe($.clean());
 });
 
-gulp.task('build', ['html', 'images', 'fonts']);
+gulp.task('build', ['html', 'images', 'fonts', 'resume.json']);
 
 gulp.task('default', ['clean'], function () {
     gulp.start('push');
