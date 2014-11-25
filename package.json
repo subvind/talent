@@ -10,7 +10,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "gulp-ng-annotate": "^0.2.0",
     "angular-pipe": "git://github.com/angular/pipe.git#remove-transitive-deps",
     "brfs": "^1.1.1",
     "browserify": "~3.24.1",
@@ -38,10 +37,12 @@
     "gulp-if": "0.0.5",
     "gulp-imagemin": "^0.2.0",
     "gulp-jshint": "1.6.1",
+    "gulp-jsonminify": "0.0.2",
     "gulp-karma": "~0.0.1",
     "gulp-livereload": "^1.5.0",
     "gulp-load-plugins": "^0.5.0",
     "gulp-minify-css": "~0.1.0",
+    "gulp-ng-annotate": "^0.2.0",
     "gulp-ngmin": "~0.1.1",
     "gulp-rename": "~1.2.0",
     "gulp-rev": "~0.3.2",
@@ -85,5 +86,10 @@
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "morgan": "^1.5.0",
+    "vhost": "^3.0.0"
   }
 }

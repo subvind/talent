@@ -11,9 +11,7 @@ angular
         // states
         'resume'
     ])
-    .config(function ($locationProvider) {
+    .config(function ($locationProvider, $urlRouterProvider) {
         $locationProvider.html5Mode(true);
-    })
-    .run(function ($state) {
-        $state.go('resume');
+        $urlRouterProvider.otherwise('/');
     });

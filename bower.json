@@ -20,7 +20,8 @@
     "angular-spinner": "~0.5.0",
     "bootstrap-sass-official": "~3.2.0",
     "angular-resource": "~1.2.20",
-    "angular-cache": "~3.1.0"
+    "angular-cache": "~3.1.0",
+    "angular-meta": "~0.2.0"
   },
   "devDependencies": {
     "angular-mocks": "1.3.0-beta.5",

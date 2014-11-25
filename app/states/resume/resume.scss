@@ -1,19 +1,7 @@
 $lineWidth: 100px;
 
-@media print {
-  .resume {
-    margin-bottom: 0;
-    .website {
-      // background of span isn't covering :before up on print / looks ugly
-      &:before {
-        display: none;
-      }
-    }
-  }
-}
-
 .resume {
-  margin: 100px 0;
+  margin: 100px 0 500px;
   font-size: 16px;
   h2 {
     margin-left: $lineWidth + 20px;
@@ -114,6 +102,23 @@ $lineWidth: 100px;
       list-style-type: none;
       padding: 0;
       margin-left: $lineWidth + 20px;
+    }
+  }
+}
+
+@media print {
+  .resume {
+    margin: 50px 0;
+    .website {
+      // background of span isn't covering :before while using print / looks ugly
+//      &:before {
+//        display: none;
+//      }
+      // hah, print preview removed the background even tho we had backgrounds enabled.
+      // this seams to do the trick
+      >span {
+        background: #fff !important;
+      }
     }
   }
 }

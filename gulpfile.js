@@ -1,23 +1,43 @@
 'use strict';
 
+// config
+// don't forget to add domains to hostfile
+// sudo hostile set localhost travisburandt.github.dev
+var fs = require("fs");
 var gulp = require('gulp');
 var path = require('path');
-var buildPath = path.resolve(__dirname + "/TravisBurandt.github.io");
+var buildPath = path.resolve(__dirname + "/travisburandt.github.io");
 var appPath = path.resolve(__dirname + "/");
 var run = require("./lib/run-child-process");
 var eventStream = require('event-stream');
-
-// load plugins
 var $ = require('gulp-load-plugins')();
+var pouncyConfig = require("./pouncy.json");
+var _ = require("lodash");
 
-// config
-var config = {
-    "livereload": {
-        "port": 35728, // port for livereload
-        "expressRoot": "app",
-        "expressPort": 4817
-    }
-};
+var config = {};
+_.forEach(pouncyConfig, function  (value, key) {
+    this[value.name] = value;
+}, config);
+
+//gulp.task('polymer', function () {
+//    return gulp
+//        .src('app/states/polymer/polymer.html')
+//        .pipe($.vulcanize({
+//            dest: 'app/polymer/.tmp',
+//            strip: true
+//        }))
+//        .pipe(gulp.dest('app/polymer/.tmp'));
+//});
+
+gulp.task('resume.json', function () {
+    return gulp
+        .src([
+            'app/resume.json'
+        ])
+        .pipe($.jsonminify())
+        .pipe(gulp.dest(config.build.path))
+        .pipe($.size());
+});
 
 gulp.task('styles', function () {
     return gulp
@@ -191,29 +211,30 @@ gulp.task('watch', function () {
      * Express
      */
     var express = require('express');
-    var app = express();
 
-    app.use(require('connect-livereload')({
+    //
+    // development express app
+    //
+    var devApp = express();
+
+    devApp.use(require('connect-livereload')({
         port: config.livereload.port
     }));
 
     // serve static files for everything else
-    app.use('/', express.static(config.livereload.expressRoot));
+    devApp.use('/', express.static(__dirname + config.dev.path));
 
-    app.listen(config.livereload.expressPort);
+    devApp.listen(config.dev.port);
 
-    // proxy api calls to server
-//    app.all('/api/*', function(req, res) {
-//        var httpProxy = require('http-proxy');
-//        var proxy = new httpProxy.createProxyServer();
-//        proxy.web(req, res, {
-//            target: 'http://something.com',
-//            port: 80
-//        });
-//        proxy.on('proxyRes', function (res) {
-//            console.log('RAW Response from the target', res.req);
-//        });
-//    });
+    //
+    // build express app
+    //
+    var buildApp = express();
+
+    // serve static files for everything else
+    buildApp.use('/', express.static(__dirname + config.build.path));
+
+    buildApp.listen(config.build.port);
 
     /**
      * livereload
@@ -233,7 +254,7 @@ gulp.task('watch', function () {
      */
     // watch general changes
     gulp.watch([
-        'app/*.html',
+        'app/*.*',
         'app/images/**/*',
         'app/styles/main.css',
         'app/states/**/*',
@@ -263,7 +284,6 @@ gulp.task('watch', function () {
     gulp
         .watch([
             'app/**/*.js',
-            'app/*.js',
             '!app/.tmp/**/*'
         ], function () {
             gulp.start('scripts');
