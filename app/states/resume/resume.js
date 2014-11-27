@@ -2,24 +2,24 @@
 angular
     .module('resume')
     .controller('ResumeCtrl', function ($scope, $window, $state, resume, $stateParams) {
-        $window.document.title = resume.basics.name + ' - Resume';
+        $window.document.title = resume.general.name + ' - Resume';
 
-        var self = this;
+        var that = this;
         this.$stateParams = $stateParams;
-        this.filter = this.$stateParams.filter;
+        this.filter = [];
 
         _.forEach(resume, function(value, key) {
-            self[key] = value;
+            that[key] = value;
         });
 
         this.filter.isActive = function (keyword) {
-            return self.filter.filter(function(value) {
+            return that.filter.filter(function(value) {
                 return keyword == value;
             }).length > 0;
         };
 
         this.goGithub = function() {
-            $window.location = '//' + resume.basics.website;
+            $window.location = '//' + resume.general.website;
         };
 
         this.addOrRemove = function(array, value) {
@@ -31,4 +31,19 @@ angular
             }
             return array;
         };
+
+        $scope.$watch(
+            function () {
+                return that.filter.length;
+            },
+            function (newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    ga('send', 'event', {
+                        'eventCategory': 'Resume',
+                        'eventAction': 'Filter',
+                        'eventValue': that.filter
+                    });
+                }
+            }
+        );
     });

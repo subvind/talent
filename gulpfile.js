@@ -6,8 +6,6 @@
 var fs = require("fs");
 var gulp = require('gulp');
 var path = require('path');
-var buildPath = path.resolve(__dirname + "/travisburandt.github.io");
-var appPath = path.resolve(__dirname + "/");
 var run = require("./lib/run-child-process");
 var eventStream = require('event-stream');
 var $ = require('gulp-load-plugins')();
@@ -15,66 +13,76 @@ var pouncyConfig = require("./pouncy.json");
 var _ = require("lodash");
 
 var config = {};
-_.forEach(pouncyConfig, function  (value, key) {
-    this[value.name] = value;
-}, config);
+_.forEach(pouncyConfig, function (config, key) {
+    config.root = config.path || __dirname;
+    config.path = function (value) {
+        // trim prefix slash?
+        if (value && value.charAt(0) === '/') {
+            value = value.substring(1);
+        }
 
-//gulp.task('polymer', function () {
-//    return gulp
-//        .src('app/states/polymer/polymer.html')
-//        .pipe($.vulcanize({
-//            dest: 'app/polymer/.tmp',
-//            strip: true
-//        }))
-//        .pipe(gulp.dest('app/polymer/.tmp'));
-//});
+        // add trailing slash?
+        if (config.root.charAt(-1) !== '/') {
+            config.root = config.root + '/';
+        }
+
+        return path.resolve(config.root + (value || ''));
+    };
+    config.notPath = function (value) {
+        return '!' + config.path(value);
+    };
+    this[config.name] = config;
+}, config);
 
 gulp.task('resume.json', function () {
     return gulp
-        .src([
-            'app/resume.json'
-        ])
+        .src(config.dev.path('resume.json'))
         .pipe($.jsonminify())
-        .pipe(gulp.dest(config.build.path))
+        .pipe(gulp.dest(config.build.path()))
+        .pipe($.size());
+});
+
+gulp.task('pdf', function () {
+    return gulp
+        .src(config.dev.path('*.pdf'))
+        .pipe(gulp.dest(config.build.path()))
         .pipe($.size());
 });
 
 gulp.task('styles', function () {
     return gulp
-        .src([
-            'app/styles/**/*.scss'
-        ])
+        .src(config.dev.path('styles/**/*.scss'))
         .pipe($.rubySass({
             style: 'expanded',
             sourcemap: false
         }))
         .pipe($.autoprefixer('last 1 version'))
-        .pipe(gulp.dest('app/styles'))
+        .pipe(gulp.dest(config.dev.path('styles')))
         .pipe($.size());
 });
 
 gulp.task('templates', function () {
     return gulp
         .src([
-            'app/**/*.html',
-            '!app/index.html',
-            '!app/.tmp/**/*',
-            '!app/bower_components/**/*'
+            config.dev.path('**/*.html'),
+            config.dev.notPath('index.html'),
+            config.dev.notPath('.tmp/**/*'),
+            config.dev.notPath('bower_components/**/*')
         ])
         .pipe($.angularTemplatecache('app-templates.js', {
             module : 'app-templates',
             standalone: []
         }))
-        .pipe(gulp.dest('app/.tmp/js'))
+        .pipe(gulp.dest(config.dev.path('.tmp/js')))
 });
 
 gulp.task('scripts', function () {
     var jshint = require('gulp-jshint');
 
     return gulp.src([
-            'app/**/*.js',
-            '!app/.tmp/**/*.js',
-            '!app/bower_components/**/*.js'
+            config.dev.path('**/*.js'),
+            config.dev.notPath('.tmp/**/*.js'),
+            config.dev.notPath('bower_components/**/*.js')
         ])
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'));
@@ -85,7 +93,7 @@ gulp.task('html', ['scripts', 'styles', 'templates'], function () {
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
 
-    return gulp.src('app/*.html')
+    return gulp.src(config.dev.path('*.html'))
         .pipe($.useref.assets())
         .pipe(jsFilter)
         .pipe($.ngAnnotate())
@@ -98,21 +106,19 @@ gulp.task('html', ['scripts', 'styles', 'templates'], function () {
         .pipe($.useref.restore())
         .pipe($.useref())
         .pipe($.revReplace())
-        .pipe(gulp.dest(buildPath))
+        .pipe(gulp.dest(config.build.path()))
         .pipe($.size());
 });
 
 gulp.task('images', function () {
     return gulp
-        .src(
-            'app/**/*.png'
-        )
+        .src(config.dev.path('**/*.png'))
 //        .pipe($.cache($.imagemin({
 //            optimizationLevel: 3,
 //            progressive: true,
 //            interlaced: true
 //        })))
-        .pipe(gulp.dest(buildPath))
+        .pipe(gulp.dest(config.build.path()))
         .pipe($.size());
 });
 
@@ -120,15 +126,14 @@ gulp.task('fonts', function () {
     var bootstrap = $.bowerFiles()
         .pipe($.filter([
             'bootstrap/**/*.{eot,svg,ttf,woff}'
-//            'font-awesome/**/*.{eot,svg,ttf,woff}'
         ]))
         .pipe($.flatten())
-        .pipe(gulp.dest(buildPath + '/styles/fonts'))
+        .pipe(gulp.dest(config.build.path('styles/fonts')))
         .pipe($.size());
 
     var other = $.bowerFiles()
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
-        .pipe(gulp.dest(buildPath + '/bower_components'))
+        .pipe(gulp.dest(config.build.path('bower_components')))
         .pipe($.size());
 
     return eventStream.concat(bootstrap, other);
@@ -137,43 +142,53 @@ gulp.task('fonts', function () {
 gulp.task('clean', ['reset'], function () {
     return gulp
         .src([
-            'app/.tmp',
-            buildPath + '/*',
-            '!' + buildPath + '/.git*'
+            config.dev.path('.tmp'),
+            config.build.path('*'),
+            config.build.notPath('.git*')
         ], { read: false })
         .pipe($.clean());
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'resume.json']);
+gulp.task('build', ['html', 'images', 'fonts', 'resume.json', 'pdf']);
 
 gulp.task('default', ['clean'], function () {
     gulp.start('push');
 });
 
 gulp.task('reset', function () {
-    return run('git reset origin/master --hard', buildPath);
+    return run('git reset origin/master --hard', config.build.path());
 });
 
+// generates PDF from the build directory
+//gulp.task('resume.pdf', [], function () {
+//    return gulp
+//        .src(config.dev.path('index.html'))
+//        .pipe($.html2pdf({
+//            name: 'test.pdf'
+//        }))
+//        .pipe(gulp.dest(config.build.path()));
+//});
+
 gulp.task('push', ['build'], function () {
-    return run('git fetch', buildPath)
+    return run('git fetch', config.build.path())
         .then(function (res) {
-            return run('git add . --all', buildPath);
+            return run('git add . --all', config.build.path());
         })
         .then(function (res) {
-            return run('git status -b --porcelain --ignore-submodules', appPath);
+            return run('git status -b --porcelain --ignore-submodules', config.dev.path());
         })
         .then(function (res) {
-            return run('git commit -m "'+ res +'"', buildPath);
+            return run('git commit -m "'+ res +'"', config.build.path());
         })
         .then(function (res) {
-            return run('git push origin HEAD:master', buildPath);
+            return run('git push origin HEAD:master', config.build.path());
         })
         .then(function (res) {
-            return run('git submodule update --recursive --remote --force', appPath);
+            return run('git submodule update --recursive --remote --force', config.dev.path());
         })
         // make sure local repo has latest submodule that we just commited
         .then(function (res) {
-            return run('git add . --all', appPath);
+            return run('git add . --all', config.dev.path());
         })
 });
 
@@ -184,25 +199,30 @@ gulp.task('push', ['build'], function () {
 // inject bower components
 gulp.task('wiredep', function () {
     var wiredep = require('wiredep').stream;
+    var src = [
+        config.dev.path('.tmp/**/*'),
+        config.dev.path('components/**/*'),
+        config.dev.path('states/**/*')
+    ];
 
-    gulp.src('app/styles/*.scss')
+    gulp.src(config.dev.path('styles/*.scss'))
         .pipe(wiredep({
-            directory: 'app/bower_components',
-            src: ['app/.tmp/**/*', 'app/components/**/*', 'app/states/**/*']
+            directory: config.dev.path('bower_components'),
+            src: src
         }))
-        .pipe(gulp.dest('app/styles'));
+        .pipe(gulp.dest(config.dev.path('styles')));
 
-    gulp.src('app/*.html')
+    gulp.src(config.dev.path('*.html'))
         .pipe(wiredep({
-            directory: 'app/bower_components',
+            directory: config.dev.path('bower_components'),
             exclude: [
                 'jquery',
                 'bootstrap-sass-official',
                 'bootstrap'
             ],
-            src: ['app/.tmp/**/*', 'app/components/**/*', 'app/states/**/*']
+            src: src
         }))
-        .pipe(gulp.dest('app'));
+        .pipe(gulp.dest(config.dev.path()));
 });
 
 gulp.task('watch', function () {
@@ -222,7 +242,7 @@ gulp.task('watch', function () {
     }));
 
     // serve static files for everything else
-    devApp.use('/', express.static(__dirname + config.dev.path));
+    devApp.use('/', express.static(config.dev.path()));
 
     devApp.listen(config.dev.port);
 
@@ -232,7 +252,7 @@ gulp.task('watch', function () {
     var buildApp = express();
 
     // serve static files for everything else
-    buildApp.use('/', express.static(__dirname + config.build.path));
+    buildApp.use('/', express.static(config.build.path()));
 
     buildApp.listen(config.build.port);
 

@@ -1,13 +1,11 @@
 {
-    "filter": [],
-    "basics": {
+    "general": {
         "name": "Travis Burandt",
-        "label": "Programmer",
-        "picture": "",
         "github": "TravisBurandt",
         "email": "travis.burandt@gmail.com",
         "phone": "(281) 798-0497",
         "website": "travisburandt.github.io",
+        "resume": "http://travisburandt.github.io/travis-burandt-resume.pdf",
         "stars": [
             "JavaScript",
             "AngularJS",
@@ -69,8 +67,7 @@
     "experience": [
         {
             "title": "PASSFB - Football Scheduling",
-            "company": "Atomic Axis",
-            "position": "Software Developer",
+            "description": "Atomic Axis",
             "startDate": "Jul. 2014",
             "endDate": "Aug. 2014",
             "highlights": [
@@ -97,8 +94,7 @@
         },
         {
             "title": "DocbookMD - Registration",
-            "company": "Atomic Axis",
-            "position": "Software Developer",
+            "description": "Atomic Axis",
             "duration": "2 Weeks",
             "highlights": [
                 "Overhauled existing problematic registration system collaborating with stakeholders and in house designers throughout design comps and development.",
@@ -124,8 +120,7 @@
         },
         {
             "title": "DocbookMD - Web",
-            "company": "Atomic Axis",
-            "position": "Software Developer",
+            "description": "Atomic Axis",
             "startDate": "Apr. 2014",
             "endDate": "Jul. 2014",
             "highlights": [
@@ -154,8 +149,7 @@
         },
         {
             "title": "DocbookMD - Paging",
-            "company": "Atomic Axis",
-            "position": "Software Developer",
+            "description": "Atomic Axis",
             "startDate": "Feb. 2014",
             "endDate": "Mar. 2014",
             "highlights": [
@@ -181,8 +175,7 @@
         },
         {
             "title": "Startup Group Fitness Web Application",
-            "company": "Gritness, Inc.",
-            "position": "Software Developer",
+            "description": "Gritness, Inc.",
             "startDate": "Apr. 2013",
             "endDate": "Nov. 2013",
             "highlights": [
@@ -207,8 +200,7 @@
         },
         {
             "title": "Github - Open Source",
-            "company": "Hobby",
-            "position": "Software Developer",
+            "description": "Hobby",
             "startDate": "Jul. 2012",
             "endDate": "Current",
             "highlights": [
@@ -238,8 +230,7 @@
         },
         {
             "title": "Lonestar / Austin Community College",
-            "company": "School",
-            "position": "Software Developer",
+            "description": "School",
             "startDate": "Aug. 2011",
             "endDate": "May 2013",
             "highlights": [
@@ -252,8 +243,7 @@
         },
         {
             "title": "SaaS Field Service Web Application",
-            "company": "Powertrade Services, LLC",
-            "position": "Software Developer",
+            "description": "Powertrade Services, LLC",
             "startDate": "Dec. 2011",
             "endDate": "Apr. 2012",
             "highlights": [
@@ -275,8 +265,7 @@
         },
         {
             "title": "Mobile Applications",
-            "company": "Hobby",
-            "position": "Software Developer",
+            "description": "Hobby",
             "startDate": "2010",
             "endDate": "2011",
             "highlights": [
@@ -296,8 +285,7 @@
         },
         {
             "title": "Online Gaming Community",
-            "company": "Hobby",
-            "position": "Software Developer",
+            "description": "Hobby",
             "startDate": "Mar. 2008",
             "endDate": "2011",
             "highlights": [

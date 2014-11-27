@@ -1,21 +1,21 @@
 <div class="resume">
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row basics">
-                    <div class="col-md-6">
-                        <h1 class="name">{{res.basics.name}}</h1>
+            <div class="col-md-10 col-md-offset-1 print-alignment">
+                <div class="row general">
+                    <div class="col-md-7">
+                        <h1 class="name">{{res.general.name}}</h1>
                         <ul class="stars">
-                            <li ng-class="{underline: res.filter.isActive(star)}" ng-repeat-start="star in res.basics.stars" ng-mouseup="res.filter = res.addOrRemove(res.filter, star)">
+                            <li ng-class="{underline: res.filter.isActive(star)}" ng-repeat-start="star in res.general.stars" ng-mouseup="res.filter = res.addOrRemove(res.filter, star)">
                                 {{star}}
                             </li>
                             <li ng-repeat-end ng-show="!$last"><i class="fa fa-star"></i></li>
                         </ul>
                     </div>
-                    <ul class="contacts col-md-6">
-                        <li><i class="fa fa-phone"></i> {{res.basics.phone}}</li>
-                        <li><i class="fa fa-envelope-o"></i> {{res.basics.email}}</li>
-                        <li><i class="fa fa-github"></i> {{res.basics.github}}</li>
+                    <ul class="contacts col-md-5">
+                        <li><i class="fa fa-phone"></i> {{res.general.phone}}</li>
+                        <li><i class="fa fa-envelope-o"></i> {{res.general.email}}</li>
+                        <li><i class="fa fa-github"></i> {{res.general.github}}</li>
                     </ul>
                 </div>
                 <div class="skills">
@@ -54,7 +54,7 @@
                                 <div ng-show="!exp.duration">{{exp.startDate}} -<br> {{exp.endDate}}</div>
                             </div>
                             <div class="info">
-                                <b>{{exp.title}}</b>, <i>{{exp.company}}</i>
+                                <b>{{exp.title}}</b>, <i>{{exp.description}}</i>
                                 <ul class="list">
                                     <li ng-repeat="highlight in exp.highlights">
                                         {{highlight}}
@@ -73,8 +73,7 @@
                     </ul>
                 </div>
                 <div class="website">
-                    <!-- print pdf looks ugly with an "a href" tag-->
-                    <span ng-click="res.goGithub()">{{res.basics.website}}</span>
+                    <span ng-click="res.goGithub()">{{res.general.website}}</span>
                 </div>
             </div>
         </div>

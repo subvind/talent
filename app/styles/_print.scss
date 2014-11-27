@@ -1,20 +1,17 @@
 @media print {
 
-  @page
-  {
+  // printer dialog can do their own margins
+  @page {
     size: auto;   /* auto is the initial value */
     margin: 0;  /* this affects the margin in the printer settings */
   }
 
-  body
-  {
+  body {
     background-color:#FFFFFF;
-    width: 1080px;
     font-size: 14pt;
-    margin: 0px;  /* this affects the margin on the content before sending to printer */
+    margin: 0;  /* this affects the margin on the content before sending to printer */
     padding: 0;
   }
-
 
   .col-md-1,
   .col-md-2,

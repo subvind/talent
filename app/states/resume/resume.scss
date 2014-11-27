@@ -8,7 +8,7 @@ $lineWidth: 100px;
     font-variant: small-caps;
     text-transform: capitalize;
     font-weight: 400;
-    font-size: 22px;
+    font-size: 1.5em;
     &:before {
       width: $lineWidth;
       height: 6px;
@@ -21,7 +21,7 @@ $lineWidth: 100px;
       display: block;
     }
   }
-  .basics {
+  .general {
     .name {
       margin: 0;
       font-size: 3em;
@@ -94,10 +94,10 @@ $lineWidth: 100px;
     padding: 0 0 0 $lineWidth + 10px;
     >li {
       padding-left: 10px;
-
     }
   }
   .community {
+    font-size: 0.9em;
     >ul {
       list-style-type: none;
       padding: 0;
@@ -108,7 +108,16 @@ $lineWidth: 100px;
 
 @media print {
   .resume {
-    margin: 50px 0;
+    font-size: 18px;
+    .print-alignment {
+      width: 10in;
+      margin: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+    }
     .website {
       // background of span isn't covering :before while using print / looks ugly
 //      &:before {
