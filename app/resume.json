@@ -51,7 +51,9 @@
                 "Meteor",
                 "Cross Browser",
                 "SEO",
-                "Yii"
+                "Yii",
+                "Microsoft",
+                "TFS"
             ]
         },
         {
@@ -60,11 +62,36 @@
                 "Local Storage",
                 "PostgreSQL",
                 "MySQL / MariaDB",
-                "Redis"
+                "Redis",
+                "CQRS"
             ]
         }
     ],
     "experience": [
+        {
+            "title": "MIS - Management Information System",
+            "description": "PNIDigitalMedia",
+            "startDate": "Jan. 2015",
+            "endDate": "present",
+            "highlights": [
+                "http://www.pnimedia.com"
+            ],
+            "keywords": [
+                "5LMT",
+                "CQRS",
+                "Local Storage",
+                "Grunt",
+                "Twitter Bootstrap",
+                "Less",
+                "HTML",
+                "CSS",
+                "Grunt",
+                "TFS",
+                "Microsoft",
+                "AngularJS",
+                "JavaScript"
+            ]
+        },
         {
             "title": "PASSFB - Football Scheduling",
             "description": "Atomic Axis",

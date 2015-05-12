@@ -89,8 +89,8 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
-    "morgan": "^1.5.0",
+    "lodash": "^2.4.2",
+    "morgan": "^1.5.3",
     "vhost": "^3.0.0"
   }
 }
