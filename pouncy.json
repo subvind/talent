@@ -1,25 +1,25 @@
 [
     {
         "name": "dev",
-        "domain": "travisburandt.github.dev",
+        "domain": "metaheap.github.dev",
         "path": "app",
         "port": 1337
     },
     {
         "name": "build",
-        "domain": "travisburandt.github.build",
-        "path": "TravisBurandt.github.io",
+        "domain": "metaheap.github.build",
+        "path": "metaheap.github.io",
         "port": 1338
     },
     {
         "name": "stage",
-        "domain": "travisburandt.github.stage",
-        "path": "TravisBurandt.github.io",
+        "domain": "metaheap.github.stage",
+        "path": "metaheap.github.io",
         "port": 1339
     },
     {
         "name": "prod",
-        "domain": "travisburandt.github.io",
+        "domain": "metaheap.github.io",
         "port": 80
     },
     {
